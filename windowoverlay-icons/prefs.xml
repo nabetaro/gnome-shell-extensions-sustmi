@@ -429,12 +429,14 @@
       </packing>
     </child>
     <child>
-      <object class="GtkSpinButton" id="spinbutton2">
+      <object class="GtkHScale" id="scalefocus">
         <property name="visible">True</property>
         <property name="can_focus">True</property>
-        <property name="invisible_char">●</property>
         <property name="adjustment">icon_opacity_focus</property>
-        <property name="numeric">True</property>
+        <property name="min">0</property>
+        <property name="max">255</property>
+        <property name="step">1</property>
+        <property name="digits">0</property>
       </object>
       <packing>
         <property name="left_attach">1</property>
@@ -444,12 +446,14 @@
       </packing>
     </child>
     <child>
-      <object class="GtkSpinButton" id="spinbutton3">
+      <object class="GtkHScale" id="scaleblur">
         <property name="visible">True</property>
         <property name="can_focus">True</property>
-        <property name="invisible_char">●</property>
         <property name="adjustment">icon_opacity_blur</property>
-        <property name="numeric">True</property>
+        <property name="min">0</property>
+        <property name="max">255</property>
+        <property name="step">1</property>
+        <property name="digits">0</property>
       </object>
       <packing>
         <property name="left_attach">1</property>
