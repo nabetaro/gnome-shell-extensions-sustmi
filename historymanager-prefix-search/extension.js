@@ -19,27 +19,6 @@ const Clutter = imports.gi.Clutter;
 const History = imports.misc.history;
 const Main = imports.ui.main;
 
-
-function injectToFunction(parent, name, func) {
-    let origin = parent[name];
-    parent[name] = function() {
-        let ret;
-        if (origin !== undefined) {
-            ret = origin.apply(this, arguments);
-        }
-        ret = func.apply(this, arguments);
-        return ret;
-    }
-    return origin;
-}
-function removeInjection(object, injection, name) {
-    if (injection[name] === undefined) {
-        delete object[name];
-    } else {
-        object[name] = injection[name];
-    }
-}
-
 let historyManagerInjections;
 
 function resetState() {
@@ -110,6 +89,35 @@ function enable() {
 
 }
 
+function injectToFunction(objectPrototype, functionName, injectedFunction) {
+    let originalFunction = objectPrototype[functionName];
+
+    objectPrototype[functionName] = function() {
+        let returnValue;
+
+        if (originalFunction !== undefined) {
+        	returnValue = originalFunction.apply(this, arguments);
+        }
+
+        let injectedReturnValue = injectedFunction.apply(this, arguments);
+        if (returnValue === undefined) {
+            returnValue = injectedReturnValue;
+        }
+
+        return returnValue;
+    }
+
+    return originalFunction;
+}
+
+function removeInjection(objectPrototype, injection, functionName) {
+    if (injection[functionName] === undefined) {
+        delete objectPrototype[functionName];
+    } else {
+        objectPrototype[functionName] = injection[functionName];
+    }
+}
+
 function disable() {
     for (let i in historyManagerInjections) {
         removeInjection(History.HistoryManager.prototype, historyManagerInjections, i);
@@ -126,4 +134,3 @@ function main() {
     init();
     enable();
 }
-

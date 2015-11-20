@@ -43,20 +43,7 @@ const VerticalAlignment = {
     BOTTOM: 3
 };
 
-
-function injectToFunction(parent, name, func) {
-    let origin = parent[name];
-    parent[name] = function() {
-        let ret;
-        ret = origin.apply(this, arguments);
-        if (ret === undefined)
-                ret = func.apply(this, arguments);
-        return ret;
-    }
-    return origin;
-}
-
-let wsWinOverInjections
+let wsWinOverInjections;
 let createdActors;
 let settings;
 
@@ -162,9 +149,8 @@ function enable() {
             if (!this._windowOverlayIconsExtension.icon) {
                 // fallback to default icon
                 let texture_cache = St.TextureCache.get_default();
-								this._windowOverlayIconsExtension.icon = texture_cache.load_icon_name(null,
-																																											'application',
-																																											icon_mipmap_size);
+                this._windowOverlayIconsExtension.icon = new St.Icon({ icon_name: 'application-x-executable',
+                                                                    	 icon_size: icon_mipmap_size });
             }
             
             this._windowOverlayIconsExtension.box.add_actor(this._windowOverlayIconsExtension.icon);
@@ -212,10 +198,10 @@ function enable() {
         }
     };
     
-		wsWinOverInjections['relayout'] = injectToFunction(Workspace.WindowOverlay.prototype, 'relayout', function(animate) {
-				let [cloneX, cloneY, cloneWidth, cloneHeight] = this._windowClone.slot;
-				updatePositions.call(this, cloneX, cloneY, cloneWidth, cloneHeight, animate);
-		});
+    wsWinOverInjections['relayout'] = injectToFunction(Workspace.WindowOverlay.prototype, 'relayout', function(animate) {
+        let [cloneX, cloneY, cloneWidth, cloneHeight] = this._windowClone.slot;
+        updatePositions.call(this, cloneX, cloneY, cloneWidth, cloneHeight, animate);
+    });
 
     wsWinOverInjections['_onDestroy'] = injectToFunction(Workspace.WindowOverlay.prototype, '_onDestroy', function() {
         this._windowOverlayIconsExtension.box.destroy();
@@ -223,19 +209,42 @@ function enable() {
 
 }
 
-function removeInjection(object, injection, name) {
-    if (injection[name] === undefined)
-        delete object[name];
-    else
-        object[name] = injection[name];
+function injectToFunction(objectPrototype, functionName, injectedFunction) {
+    let originalFunction = objectPrototype[functionName];
+
+    objectPrototype[functionName] = function() {
+        let returnValue;
+
+        if (originalFunction !== undefined) {
+        	returnValue = originalFunction.apply(this, arguments);
+        }
+
+        let injectedReturnValue = injectedFunction.apply(this, arguments);
+        if (returnValue === undefined) {
+            returnValue = injectedReturnValue;
+        }
+
+        return returnValue;
+    }
+
+    return originalFunction;
+}
+
+function removeInjection(objectPrototype, injection, functionName) {
+    if (injection[functionName] === undefined) {
+        delete objectPrototype[functionName];
+    } else {
+        objectPrototype[functionName] = injection[functionName];
+    }
 }
 
 function disable() {
     for (let i in wsWinOverInjections) {
         removeInjection(Workspace.WindowOverlay.prototype, wsWinOverInjections, i);
     }
-    for each (let i in createdActors)
+    for each (let i in createdActors) {
         i.destroy();
+    }
     resetState();
 }
 

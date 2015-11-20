@@ -1,46 +1,46 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Fábio Nogueira <deb-user-ba@ubuntu.com>, 2015.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: windowoverlay-icons\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-15 18:27+0200\n"
-"PO-Revision-Date: 2013-03-24 18:38+0100\n"
-"Last-Translator: Miroslav Šustek <sustmidown@centrum.cz>\n"
+"POT-Creation-Date: 2015-10-02 16:00-0300\n"
+"PO-Revision-Date: 2015-10-02 16:21-0300\n"
 "Language-Team: Miroslav Šustek <sustmidown@centrum.cz>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.8.4\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-Basepath: ..\n"
-"X-Poedit-SearchPath-0: .\n"
-"X-Poedit-SearchPathExcluded-0: schemas\n"
+"X-Poedit-Basepath: .\n"
+"Last-Translator: Fábio Nogueira <deb-user-ba@ubuntu.com>\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: pt_BR\n"
+"X-Poedit-SearchPath-0: ..\n"
 
-#: prefs.xml:100
+#: ../prefs.xml:100
 msgid "Size:"
-msgstr ""
+msgstr "Tamanho:"
 
-#: prefs.xml:132
+#: ../prefs.xml:132
 msgid "Relative"
-msgstr ""
+msgstr "Relativo"
 
-#: prefs.xml:161
+#: ../prefs.xml:161
 msgid "Background color:"
-msgstr ""
+msgstr "Cor de fundo:"
 
-#: prefs.xml:178
+#: ../prefs.xml:178
 msgid "Alignment:"
-msgstr ""
+msgstr "Alinhamento:"
 
-#: prefs.xml:405
+#: ../prefs.xml:406
 msgid "Icon opacity - focus:"
-msgstr ""
+msgstr "Opacidade do ícone - foco:"
 
-#: prefs.xml:422
+#: ../prefs.xml:423
 msgid "Icon opacity - blur:"
-msgstr ""
+msgstr "Opacidade do ícone - desfocagem:"
